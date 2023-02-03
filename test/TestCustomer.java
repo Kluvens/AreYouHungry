@@ -35,6 +35,11 @@ public class TestCustomer {
         assertEquals(newCustomer.getAddresses().size(), 3);
         newCustomer.removeAddress(addressThird);
         assertEquals(newCustomer.getAddresses().size(), 2);
+        PersonAddress addressFourth = newCustomer.generateAddress(4, "NSW", "Syd", "2036", "Hills", "h st.", "Home");
+        assertEquals(newCustomer.getAddresses().size(), 3);
+        newCustomer.updateDefaultAddress(addressFourth);
+        assertEquals(newCustomer.getDefaultAddress(), addressFourth);
+        assertEquals(newCustomer.getDefaultAddress().getLabel(), "Home");
     }
 
     @Test

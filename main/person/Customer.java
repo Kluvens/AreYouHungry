@@ -23,6 +23,13 @@ public class Customer extends Person {
         return address;
     }
 
+    public PersonAddress generateAddress(int id, String stateName, String cityName, 
+                                        String postalCode, String suburbName, String addressDetail, String label) {
+        PersonAddress address = new PersonAddress(id, stateName, cityName, postalCode, suburbName, addressDetail, this.getDisplayName(), this.getPhoneNumber(), label);
+        addAddress(address);
+        return address;
+    }
+
     public PersonAddress getDefaultAddress() {
         return defaultAddress;
     }
