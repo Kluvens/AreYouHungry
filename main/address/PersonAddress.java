@@ -1,10 +1,30 @@
 package main.address;
 
-import java.time.LocalDateTime;
-
 public class PersonAddress extends Address {
+    private String name;
+    private String phoneNumber;
+
     public PersonAddress(int id, String stateName, String cityName, 
-                String postalCode, String suburbName, String addressDetail, LocalDateTime createTime) {
-        super(id, stateName, cityName, postalCode, suburbName, addressDetail, createTime);
+                String postalCode, String suburbName, String addressDetail, String name, String phoneNumber) {
+        super(id, stateName, cityName, postalCode, suburbName, addressDetail);
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
 }

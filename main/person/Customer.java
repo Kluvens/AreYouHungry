@@ -16,6 +16,13 @@ public class Customer extends Person {
         this.defaultAddress = null;
     }
 
+    public PersonAddress generateAddress(int id, String stateName, String cityName, 
+                                        String postalCode, String suburbName, String addressDetail) {
+        PersonAddress address = new PersonAddress(id, stateName, cityName, postalCode, suburbName, addressDetail, this.getDisplayName(), this.getPhoneNumber());
+        addAddress(address);
+        return address;
+    }
+
     public PersonAddress getDefaultAddress() {
         return defaultAddress;
     }

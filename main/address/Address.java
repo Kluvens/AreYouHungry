@@ -15,7 +15,7 @@ public abstract class Address {
     private LocalDateTime updateTime;
 
     public Address(int id, String stateName, String cityName, 
-                    String postalCode, String suburbName, String addressDetail, LocalDateTime createTime) {
+                    String postalCode, String suburbName, String addressDetail) {
         this.id = id;
         this.stateName = stateName;
         this.cityName = cityName;
@@ -23,7 +23,7 @@ public abstract class Address {
         this.suburbName = suburbName;
         this.addressDetail = addressDetail;
         this.labels = new ArrayList<>();
-        this.createTime = createTime;
+        this.createTime = LocalDateTime.now();
         this.updateTime = createTime;
     }
 

@@ -31,7 +31,7 @@ public class TestController {
     @DisplayName("Test controller members generating")
     public void TestGeneratingMembers() {
         Controller controller = new Controller();
-        RestaurantAddress address = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.", LocalDateTime.now());
+        RestaurantAddress address = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
         Restaurant newRestaurant = controller.generateRestaurant(1, "pizza hut", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", address, 0, LocalDateTime.now());
         assertEquals(newRestaurant, controller.getRestaurants().get(0));
         assertEquals(newRestaurant.getAddress(), address);
