@@ -1,19 +1,21 @@
 package main.person;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import main.address.PersonAddress;
 import main.restaurant.*;
 import main.dish.*;
-import main.order.Order;
+import main.order.*;
 import main.shoppingCart.*;
 
 public class Customer extends Person {
     private PersonAddress defaultAddress;
     private ArrayList<PersonAddress> addresses;
     private HashMap<Restaurant, ArrayList<Dish>> shoppingCarts;
-    private ArrayList<Order> orders;
+    private ArrayList<PendingOrder> pendingOrders;
+    private ArrayList<CompletedOrder> orders;
 
     public Customer(int id, String displayName, String givenName, String surname,
                     String phoneNumber, String emailAddress, String gender) {
@@ -95,15 +97,33 @@ public class Customer extends Person {
         }
     }
 
-    public ArrayList<Order> getOrders() {
+    public ArrayList<PendingOrder> getPendingOrders() {
+        return pendingOrders;
+    }
+
+    public ArrayList<CompletedOrder> getOrders() {
         return orders;
     }
 
-    // public Order makeOrder(Restaurant restaurant, Dish... dishes) {
+    public PendingOrder makeOrder(int orderId, Restaurant restaurant, Dish... dishes) {
+        int totalPrice = 0;
+        PendingOrder newPendingOrder = new PendingOrder(orderId, this.getId(), restaurant.getId(), this.getDefaultAddress(), LocalDateTime.now(), totalPrice, "");
+        this.pendingOrders.add(newPendingOrder);
+        return newPendingOrder;
+    }
 
-    // }
+    public void cancelPendingOrder(PendingOrder pendingOrder) {
+        this.pendingOrders.remove(pendingOrder);
+    }
 
-    // public void removeOrder(Order order) {
-    //     this.orders.remove(order);
-    // }
+    public CompletedOrder completeOrder(PendingOrder pendingOrder) {
+        CompletedOrder order = new CompletedOrder(pendingOrder, LocalDateTime.now(), "WeChat");
+        this.pendingOrders.remove(pendingOrder);
+        this.orders.add(order);
+        return order;
+    }
+
+    public void cancelOrder(CompletedOrder order) {
+        this.orders.remove(order);
+    }
 }

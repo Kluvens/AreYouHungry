@@ -105,4 +105,28 @@ public class TestCustomer {
         newCustomer.removeFromShoppingCart(restaurantSec, dishEighth);
         assertEquals(newCustomer.getShoppingCarts().size(), 0);
     }
+
+    @Test
+    @DisplayName("Test customers can make pending orders")
+    public void TestMakingPendingOrders() {
+
+    }
+
+    @Test
+    @DisplayName("Test customers can make cancel pending orders")
+    public void TestCancellingPendingOrders() {
+
+    }
+
+    @Test
+    @DisplayName("Test customers can complete pending orders")
+    public void TestCompletingPendingOrders() {
+
+    }
+
+    @Test
+    @DisplayName("Test customers can cancel completed orders")
+    public void TestCancellingCompletedOrders() {
+        
+    }
 }
