@@ -11,15 +11,14 @@ public class Dish {
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 
-    public Dish(int id, String name, double price, String description, boolean isOnStock, LocalDateTime createTime,
-            LocalDateTime updateTime) {
+    public Dish(int id, String name, double price, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
-        this.isOnStock = isOnStock;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
+        this.isOnStock = true;
+        this.createTime = LocalDateTime.now();
+        this.updateTime = this.createTime;
     }
 
     public int getId() {
@@ -65,7 +64,7 @@ public class Dish {
     public LocalDateTime getUpdateTime() {
         return updateTime;
     }
-    
+
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }

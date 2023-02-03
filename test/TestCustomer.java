@@ -5,9 +5,11 @@ import main.address.RestaurantAddress;
 import main.controller.*;
 import main.person.Customer;
 import main.restaurant.Restaurant;
+import main.dish.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 
 import org.junit.Test;
@@ -60,5 +62,47 @@ public class TestCustomer {
     @DisplayName("Test rating delivers")
     public void TestRatingDelivers() {
 
+    }
+
+    @Test
+    @DisplayName("Test putting dishes to shopping carts")
+    public void TestShoppingCarts() {
+        Controller controller = new Controller();
+        RestaurantAddress address = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
+        Restaurant newRestaurant = controller.generateRestaurant(1, "pizza hut", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", address, 0, LocalDateTime.now());
+        Dish dishFirst = newRestaurant.addDish(1, "seafood pizza", 15, "with pawns");
+        Dish dishSec = newRestaurant.addDish(2, "pawn", 20, "King Pawn");
+        Dish dishThird = newRestaurant.addDish(3, "burger", 10, "Better than Maccas");
+        Dish dishFourth = newRestaurant.addDish(4, "milktea", 5, "sweat");
+        Customer newCustomer = controller.generateCustomer(1, "Justin", "Justin", "Yang", "0405522522", "young.jiapeng@gmail.com", "Male");
+        newCustomer.putToShoppingCart(newRestaurant, dishFirst);
+        newCustomer.putToShoppingCart(newRestaurant, dishFourth);
+        assertEquals(newCustomer.getShoppingCarts().size(), 1);
+        assertEquals(newCustomer.getShoppingCarts().get(newRestaurant).size(), 2);
+        newCustomer.removeFromShoppingCart(newRestaurant, dishFourth);
+        assertEquals(newCustomer.getShoppingCarts().get(newRestaurant).size(), 1);
+
+        RestaurantAddress addressSec = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
+        Restaurant restaurantSec = controller.generateRestaurant(1, "pizza hut", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", addressSec, 0, LocalDateTime.now());
+        Dish dishFifth = newRestaurant.addDish(1, "seafood pizza", 15, "with pawns");
+        Dish dishSixth = newRestaurant.addDish(2, "pawn", 20, "King Pawn");
+        Dish dishSeventh = newRestaurant.addDish(3, "burger", 10, "Better than Maccas");
+        Dish dishEighth = newRestaurant.addDish(4, "milktea", 5, "sweat");
+        newCustomer.putToShoppingCart(restaurantSec, dishFifth);
+        newCustomer.putToShoppingCart(restaurantSec, dishSixth);
+        newCustomer.putToShoppingCart(restaurantSec, dishSeventh);
+        newCustomer.putToShoppingCart(restaurantSec, dishEighth);
+        assertEquals(newCustomer.getShoppingCarts().size(), 2);
+        assertEquals(newCustomer.getShoppingCarts().get(restaurantSec).size(), 4);
+
+        newCustomer.removeFromShoppingCart(newRestaurant, dishFirst);
+        assertEquals(newCustomer.getShoppingCarts().size(), 1);
+        assertEquals(newCustomer.getShoppingCarts().get(restaurantSec).size(), 4);
+
+        newCustomer.removeFromShoppingCart(restaurantSec, dishFifth);
+        newCustomer.removeFromShoppingCart(restaurantSec, dishSixth);
+        newCustomer.removeFromShoppingCart(restaurantSec, dishSeventh);
+        newCustomer.removeFromShoppingCart(restaurantSec, dishEighth);
+        assertEquals(newCustomer.getShoppingCarts().size(), 0);
     }
 }

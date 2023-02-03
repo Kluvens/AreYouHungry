@@ -154,8 +154,10 @@ public class Restaurant implements Ratable {
         return menu;
     }
 
-    public void aadDish(Dish dish) {
-        this.menu.add(dish);
+    public Dish addDish(int id, String name, double price, String description) {
+        Dish newDish = new Dish(id, name, price, description);
+        this.menu.add(newDish);
+        return newDish;
     }
 
     public void removeDish(Dish dish) {
