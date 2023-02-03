@@ -2,12 +2,13 @@ package main.restaurant;
 
 import main.address.RestaurantAddress;
 import main.dish.Dish;
+import main.interfaces.Ratable;
 import main.order.Order;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Restaurant {
+public class Restaurant implements Ratable {
     private int id;
     private String restaurantName;
     private String description;

@@ -11,7 +11,6 @@ public abstract class Address {
     private String suburbName;
     private String addressDetail;
     private ArrayList<String> labels;
-    private boolean isDefault;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 
@@ -24,7 +23,6 @@ public abstract class Address {
         this.suburbName = suburbName;
         this.addressDetail = addressDetail;
         this.labels = new ArrayList<>();
-        this.isDefault = true;
         this.createTime = createTime;
         this.updateTime = createTime;
     }
@@ -83,14 +81,6 @@ public abstract class Address {
 
     public void removeLabel(String label) {
         this.labels.remove(label);
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
-
-    public void setDefault(boolean isDefault) {
-        this.isDefault = isDefault;
     }
 
     public LocalDateTime getCreateTime() {

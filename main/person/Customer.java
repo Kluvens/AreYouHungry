@@ -6,12 +6,22 @@ import main.address.PersonAddress;
 import main.restaurant.*;
 
 public class Customer extends Person {
+    private PersonAddress defaultAddress;
     private ArrayList<PersonAddress> addresses;
 
     public Customer(int id, String displayName, String givenName, String surname,
                     String phoneNumber, String emailAddress, String gender) {
         super(id, displayName, givenName, surname, phoneNumber, emailAddress, gender);
         this.addresses = new ArrayList<>();
+        this.defaultAddress = null;
+    }
+
+    public PersonAddress getDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public void updateDefaultAddress(PersonAddress address) {
+        this.defaultAddress = address;
     }
 
     public ArrayList<PersonAddress> getAddresses() {
@@ -19,6 +29,9 @@ public class Customer extends Person {
     }
 
     public void addAddress(PersonAddress address) {
+        if (this.addresses.size() == 0) {
+            defaultAddress = address;
+        }
         this.addresses.add(address);
     }
 

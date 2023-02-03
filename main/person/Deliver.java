@@ -1,6 +1,8 @@
 package main.person;
 
-public class Deliver extends Person {
+import main.interfaces.Ratable;
+
+public class Deliver extends Person implements Ratable {
     private int licenseNumber;
     private double totalRating;
     private int numRating;
