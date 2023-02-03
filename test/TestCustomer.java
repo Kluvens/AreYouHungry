@@ -109,7 +109,7 @@ public class TestCustomer {
     @Test
     @DisplayName("Test customers can make pending orders")
     public void TestMakingPendingOrders() {
-
+        
     }
 
     @Test
@@ -127,6 +127,6 @@ public class TestCustomer {
     @Test
     @DisplayName("Test customers can cancel completed orders")
     public void TestCancellingCompletedOrders() {
-        
+
     }
 }

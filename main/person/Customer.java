@@ -3,12 +3,13 @@ package main.person;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.*;
+import java.util.stream.*;
 
 import main.address.PersonAddress;
 import main.restaurant.*;
 import main.dish.*;
 import main.order.*;
-import main.shoppingCart.*;
 
 public class Customer extends Person {
     private PersonAddress defaultAddress;
@@ -106,7 +107,10 @@ public class Customer extends Person {
     }
 
     public PendingOrder makeOrder(int orderId, Restaurant restaurant, Dish... dishes) {
-        int totalPrice = 0;
+        double totalPrice = 0;
+        for (Dish i: dishes) {
+            totalPrice += i.getPrice();
+        }
         PendingOrder newPendingOrder = new PendingOrder(orderId, this.getId(), restaurant.getId(), this.getDefaultAddress(), LocalDateTime.now(), totalPrice, "");
         this.pendingOrders.add(newPendingOrder);
         return newPendingOrder;

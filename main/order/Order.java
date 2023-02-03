@@ -9,7 +9,6 @@ public abstract class Order {
     private int customerId;
     private int restaurantId;
     private PersonAddress receivingAddress;
-    private int deliverId;
     private LocalDateTime orderTime;
     private double totalPrice;
     private String remark;
@@ -44,14 +43,6 @@ public abstract class Order {
 
     public void setReceivingAddress(PersonAddress receivingAddress) {
         this.receivingAddress = receivingAddress;
-    }
-
-    public int getDeliverId() {
-        return deliverId;
-    }
-
-    public void assignDeliver(int deliverId) {
-        this.deliverId = deliverId;
     }
 
     public LocalDateTime getOrderTime() {

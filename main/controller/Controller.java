@@ -2,6 +2,7 @@ package main.controller;
 
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import main.person.Customer;
 import main.person.Deliver;
@@ -50,5 +51,12 @@ public class Controller {
         Restaurant newRestaurant = new Restaurant(id, restaurantName, description, phoneNumber, emailAddress, licenseNumber, restaurantAddress, freeDeliveryStarts, LocalDateTime.now());
         restaurants.add(newRestaurant);
         return newRestaurant;
+    }
+
+    public Deliver assignDeliverForOrder() {
+        Random rand = new Random();
+        int size = delivers.size();
+        int intRandom = rand.nextInt(size);
+        return delivers.get(intRandom);
     }
 }
