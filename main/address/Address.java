@@ -1,7 +1,6 @@
 package main.address;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public abstract class Address {
     private int id;
@@ -10,7 +9,6 @@ public abstract class Address {
     private String postalCode;
     private String suburbName;
     private String addressDetail;
-    private ArrayList<String> labels;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 
@@ -22,7 +20,6 @@ public abstract class Address {
         this.postalCode = postalCode;
         this.suburbName = suburbName;
         this.addressDetail = addressDetail;
-        this.labels = new ArrayList<>();
         this.createTime = LocalDateTime.now();
         this.updateTime = createTime;
     }
@@ -69,18 +66,6 @@ public abstract class Address {
 
     public void setAddressDetail(String addressDetail) {
         this.addressDetail = addressDetail;
-    }
-
-    public ArrayList<String> getLabels() {
-        return labels;
-    }
-
-    public void addLabel(String label) {
-        this.labels.add(label);
-    }
-
-    public void removeLabel(String label) {
-        this.labels.remove(label);
     }
 
     public LocalDateTime getCreateTime() {

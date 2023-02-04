@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -19,9 +20,9 @@ public class TestController {
     @DisplayName("Test controller can generate lists")
     public void TestListsGeneration() {
         Controller controller = new Controller();
-        ArrayList<Customer> customers = controller.getCustomers();
-        ArrayList<Deliver> delivers = controller.getDelivers();
-        ArrayList<Restaurant> restaurants = controller.getRestaurants();
+        List<Customer> customers = controller.getCustomers();
+        List<Deliver> delivers = controller.getDelivers();
+        List<Restaurant> restaurants = controller.getRestaurants();
         assertEquals(customers.size(), 0);
         assertEquals(delivers.size(), 0);
         assertEquals(restaurants.size(), 0);

@@ -1,5 +1,6 @@
 package main.person;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import main.interfaces.Ratable;
@@ -11,7 +12,7 @@ public class Deliver extends Person implements Ratable {
     private double totalRating;
     private int numRating;
     private double rating;
-    private ArrayList<Order> orders;
+    private List<Order> orders;
 
     public Deliver(int id, String displayName, String givenName, String surname,
                     String phoneNumber, String emailAddress, String gender, int licenseNumber) {
@@ -20,6 +21,7 @@ public class Deliver extends Person implements Ratable {
         this.numRating = 0;
         this.rating = 0;
         this.licenseNumber = licenseNumber;
+        this.orders = new ArrayList<>();
     }
 
     public int getLicenseNumber() {
@@ -49,7 +51,7 @@ public class Deliver extends Person implements Ratable {
         return null;
     }
 
-    public ArrayList<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 

@@ -9,6 +9,7 @@ import main.dish.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -139,7 +140,7 @@ public class TestCustomer {
         RestaurantAddress addressSec = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
         controller.generateRestaurant(1, "pizza hub", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", addressSec, 0, LocalDateTime.now());
         Customer newCustomer = controller.generateCustomer(1, "Justin", "Justin", "Yang", "0405522522", "young.jiapeng@gmail.com", "Male");
-        ArrayList<Restaurant> searchRestaurants = newCustomer.search(controller, "pizza");
+        List<Restaurant> searchRestaurants = newCustomer.search(controller, "pizza");
         assertEquals(searchRestaurants.size(), 2);
     }
 

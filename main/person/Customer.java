@@ -4,28 +4,32 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Collectors;
+import java.util.Map;
+
 import java.util.List;
 
 import main.address.PersonAddress;
 import main.restaurant.*;
+import main.voucher.Voucher;
 import main.dish.*;
 import main.order.*;
 import main.controller.*;
 
 public class Customer extends Person {
     private PersonAddress defaultAddress;
-    private ArrayList<PersonAddress> addresses;
-    private HashMap<Restaurant, ArrayList<Dish>> shoppingCarts;
-    private ArrayList<PendingOrder> pendingOrders;
-    private ArrayList<CompletedOrder> orders;
-    private ArrayList<String> searchHistory;
+    private List<PersonAddress> addresses;
+    private Map<Restaurant, List<Dish>> shoppingCarts;
+    private List<PendingOrder> pendingOrders;
+    private List<CompletedOrder> orders;
+    private List<String> searchHistory;
+    private List<Voucher> vouchers;
 
     public Customer(int id, String displayName, String givenName, String surname,
                     String phoneNumber, String emailAddress, String gender) {
         super(id, displayName, givenName, surname, phoneNumber, emailAddress, gender);
         this.addresses = new ArrayList<>();
         this.defaultAddress = null;
-        this.shoppingCarts = new HashMap<Restaurant, ArrayList<Dish>>();
+        this.shoppingCarts = new HashMap<Restaurant, List<Dish>>();
         this.orders = new ArrayList<>();
         this.searchHistory = new ArrayList<>();
     }
@@ -52,7 +56,7 @@ public class Customer extends Person {
         this.defaultAddress = address;
     }
 
-    public ArrayList<PersonAddress> getAddresses() {
+    public List<PersonAddress> getAddresses() {
         return addresses;
     }
 
@@ -75,24 +79,24 @@ public class Customer extends Person {
         deliver.updateRating(rating);
     }
 
-    public HashMap<Restaurant, ArrayList<Dish>> getShoppingCarts() {
+    public Map<Restaurant, List<Dish>> getShoppingCarts() {
         return shoppingCarts;
     }
 
     public void putToShoppingCart(Restaurant restaurant, Dish dish) {
-        ArrayList<Dish> dishesInCart = this.shoppingCarts.get(restaurant);
+        List<Dish> dishesInCart = this.shoppingCarts.get(restaurant);
         if (dishesInCart != null) {
             dishesInCart.add(dish);
             this.shoppingCarts.put(restaurant, dishesInCart);
         } else {
-            ArrayList<Dish> dishList = new ArrayList<>();
+            List<Dish> dishList = new ArrayList<>();
             dishList.add(dish);
             this.shoppingCarts.put(restaurant, dishList);
         }
     }
 
     public void removeFromShoppingCart(Restaurant restaurant, Dish dish) {
-        ArrayList<Dish> dishesInCart = this.shoppingCarts.get(restaurant);
+        List<Dish> dishesInCart = this.shoppingCarts.get(restaurant);
         dishesInCart.remove(dish);
         if (dishesInCart.size() == 0) {
             this.shoppingCarts.remove(restaurant);
@@ -101,11 +105,11 @@ public class Customer extends Person {
         }
     }
 
-    public ArrayList<PendingOrder> getPendingOrders() {
+    public List<PendingOrder> getPendingOrders() {
         return pendingOrders;
     }
 
-    public ArrayList<CompletedOrder> getOrders() {
+    public List<CompletedOrder> getOrders() {
         return orders;
     }
 
@@ -135,13 +139,22 @@ public class Customer extends Person {
         order.cancelOrder();
     }
 
-    public ArrayList<Restaurant> filter(Controller controller, RestaurantCategory... categories) {
+    public List<Restaurant> filter(Controller controller, RestaurantCategory... categories) {
         return controller.filter(categories);
     }
 
-    public ArrayList<Restaurant> search(Controller controller, String info) {
+    public List<Restaurant> search(Controller controller, String info) {
         this.searchHistory.add(0, info);
         return controller.search(info);
+    }
+
+    public List<Restaurant> filterIncludingNotOpen(Controller controller, RestaurantCategory... categories) {
+        return controller.filterIncludingNotOpen(categories);
+    }
+
+    public List<Restaurant> searchIncludingNotOpen(Controller controller, String info) {
+        this.searchHistory.add(0, info);
+        return controller.searchIncludingNotOpen(info);
     }
 
     public List<String> getSearchHistory() {
@@ -151,4 +164,16 @@ public class Customer extends Person {
     public void clearSearchHistory() {
         searchHistory.clear();
     }
+
+    // public List<Voucher> getAvailableVouchers() {
+
+    // }
+
+    // public List<Voucher> getUnavailableVouchers() {
+
+    // }
+
+    // public List<Voucher> getValidVoucher(Restaurant restaurant) {
+        
+    // }
 }

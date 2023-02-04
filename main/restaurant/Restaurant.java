@@ -5,6 +5,7 @@ import main.dish.Dish;
 import main.interfaces.Ratable;
 import main.order.Order;
 
+import java.util.List;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -24,8 +25,8 @@ public class Restaurant implements Ratable {
     private LocalDateTime createTime;
     private boolean isCredited;
     private boolean isOpen;
-    private ArrayList<Dish> menu;
-    private ArrayList<Order> orders;
+    private List<Dish> menu;
+    private List<Order> orders;
     private RestaurantCategory category;
 
     public Restaurant(int id, String restaurantName, String description, String phoneNumber, String emailAddress,
@@ -151,7 +152,7 @@ public class Restaurant implements Ratable {
         this.isOpen = isOpen;
     }
 
-    public ArrayList<Dish> getMenu() {
+    public List<Dish> getMenu() {
         return menu;
     }
 
@@ -165,7 +166,7 @@ public class Restaurant implements Ratable {
         this.menu.remove(dish);
     }
 
-    public ArrayList<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 

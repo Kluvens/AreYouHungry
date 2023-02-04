@@ -16,19 +16,19 @@ import main.restaurant.RestaurantCategory;
 import main.address.*;
 
 public class Controller {
-    private ArrayList<Customer> customers;
-    private ArrayList<Deliver> delivers;
-    private ArrayList<Restaurant> restaurants;
+    private List<Customer> customers;
+    private List<Deliver> delivers;
+    private List<Restaurant> restaurants;
 
-    public ArrayList<Customer> getCustomers() {
+    public List<Customer> getCustomers() {
         return customers;
     }
 
-    public ArrayList<Deliver> getDelivers() {
+    public List<Deliver> getDelivers() {
         return delivers;
     }
 
-    public ArrayList<Restaurant> getRestaurants() {
+    public List<Restaurant> getRestaurants() {
         return restaurants;
     }
 
@@ -69,6 +69,18 @@ public class Controller {
     public ArrayList<Restaurant> filter(RestaurantCategory... categories) {
         Set<RestaurantCategory> set = new HashSet<>(Arrays.asList(categories));
         List<Restaurant> filteredRestaurants = this.restaurants.stream()
+                    .filter(i -> i.isOpen())
+                    .filter(i -> set.contains(i.getCategory()))
+                    .collect(Collectors.toList());
+
+        ArrayList<Restaurant> restaurantList = new ArrayList<>(filteredRestaurants.size());
+        restaurantList.addAll(filteredRestaurants);
+        return restaurantList;
+    }
+
+    public ArrayList<Restaurant> filterIncludingNotOpen(RestaurantCategory... categories) {
+        Set<RestaurantCategory> set = new HashSet<>(Arrays.asList(categories));
+        List<Restaurant> filteredRestaurants = this.restaurants.stream()
                     .filter(i -> set.contains(i.getCategory()))
                     .collect(Collectors.toList());
 
@@ -78,6 +90,17 @@ public class Controller {
     }
 
     public ArrayList<Restaurant> search(String info) {
+        List<Restaurant> returnList = this.restaurants.stream()
+                    .filter(i -> i.isOpen())
+                    .filter(i -> i.getRestaurantName().contains(info))
+                    .collect(Collectors.toList());
+
+        ArrayList<Restaurant> restaurantList = new ArrayList<>(returnList.size());
+        restaurantList.addAll(returnList);
+        return restaurantList;
+    }
+
+    public ArrayList<Restaurant> searchIncludingNotOpen(String info) {
         List<Restaurant> returnList = this.restaurants.stream()
                     .filter(i -> i.getRestaurantName().contains(info))
                     .collect(Collectors.toList());
