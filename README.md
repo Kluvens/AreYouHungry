@@ -73,3 +73,4 @@ If the order is rejected the controller will assign another deliver.
 - add vouchers
 - write more tests
 - modify review and rating system
+- customers can subscribe resturants and receive notifications (observer pattern)
