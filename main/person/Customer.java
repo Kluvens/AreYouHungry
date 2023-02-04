@@ -3,13 +3,14 @@ package main.person;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
+import java.util.List;
 
 import main.address.PersonAddress;
 import main.restaurant.*;
 import main.dish.*;
 import main.order.*;
+import main.controller.*;
 
 public class Customer extends Person {
     private PersonAddress defaultAddress;
@@ -17,6 +18,7 @@ public class Customer extends Person {
     private HashMap<Restaurant, ArrayList<Dish>> shoppingCarts;
     private ArrayList<PendingOrder> pendingOrders;
     private ArrayList<CompletedOrder> orders;
+    private ArrayList<String> searchHistory;
 
     public Customer(int id, String displayName, String givenName, String surname,
                     String phoneNumber, String emailAddress, String gender) {
@@ -25,6 +27,7 @@ public class Customer extends Person {
         this.defaultAddress = null;
         this.shoppingCarts = new HashMap<Restaurant, ArrayList<Dish>>();
         this.orders = new ArrayList<>();
+        this.searchHistory = new ArrayList<>();
     }
 
     public PersonAddress generateAddress(int id, String stateName, String cityName, 
@@ -130,5 +133,22 @@ public class Customer extends Person {
     public void cancelOrder(CompletedOrder order) {
         this.orders.remove(order);
         order.cancelOrder();
+    }
+
+    public ArrayList<Restaurant> filter(Controller controller, RestaurantCategory... categories) {
+        return controller.filter(categories);
+    }
+
+    public ArrayList<Restaurant> search(Controller controller, String info) {
+        this.searchHistory.add(0, info);
+        return controller.search(info);
+    }
+
+    public List<String> getSearchHistory() {
+        return searchHistory.stream().limit(20).collect(Collectors.toList());
+    }
+
+    public void clearSearchHistory() {
+        searchHistory.clear();
     }
 }

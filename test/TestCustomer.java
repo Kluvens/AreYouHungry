@@ -9,8 +9,8 @@ import main.dish.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -71,8 +71,8 @@ public class TestCustomer {
         RestaurantAddress address = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
         Restaurant newRestaurant = controller.generateRestaurant(1, "pizza hut", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", address, 0, LocalDateTime.now());
         Dish dishFirst = newRestaurant.addDish(1, "seafood pizza", 15, "with pawns");
-        Dish dishSec = newRestaurant.addDish(2, "pawn", 20, "King Pawn");
-        Dish dishThird = newRestaurant.addDish(3, "burger", 10, "Better than Maccas");
+        newRestaurant.addDish(2, "pawn", 20, "King Pawn");
+        newRestaurant.addDish(3, "burger", 10, "Better than Maccas");
         Dish dishFourth = newRestaurant.addDish(4, "milktea", 5, "sweat");
         Customer newCustomer = controller.generateCustomer(1, "Justin", "Justin", "Yang", "0405522522", "young.jiapeng@gmail.com", "Male");
         newCustomer.putToShoppingCart(newRestaurant, dishFirst);
@@ -128,5 +128,40 @@ public class TestCustomer {
     @DisplayName("Test customers can cancel completed orders")
     public void TestCancellingCompletedOrders() {
 
+    }
+
+    @Test
+    @DisplayName("Test customers can search resturants")
+    public void TestSearchingRestaurants() {
+        Controller controller = new Controller();
+        RestaurantAddress address = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
+        controller.generateRestaurant(1, "pizza hut", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", address, 0, LocalDateTime.now());
+        RestaurantAddress addressSec = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
+        controller.generateRestaurant(1, "pizza hub", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", addressSec, 0, LocalDateTime.now());
+        Customer newCustomer = controller.generateCustomer(1, "Justin", "Justin", "Yang", "0405522522", "young.jiapeng@gmail.com", "Male");
+        ArrayList<Restaurant> searchRestaurants = newCustomer.search(controller, "pizza");
+        assertEquals(searchRestaurants.size(), 2);
+    }
+
+    @Test
+    @DisplayName("Test customers searching history")
+    public void TestSearchingHistory() {
+        Controller controller = new Controller();
+        RestaurantAddress address = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
+        controller.generateRestaurant(1, "pizza hut", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", address, 0, LocalDateTime.now());
+        RestaurantAddress addressSec = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
+        controller.generateRestaurant(1, "pizza hub", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", addressSec, 0, LocalDateTime.now());
+        Customer newCustomer = controller.generateCustomer(1, "Justin", "Justin", "Yang", "0405522522", "young.jiapeng@gmail.com", "Male");
+        newCustomer.search(controller, "pizza");
+        assertEquals(newCustomer.getSearchHistory().size(), 1);
+
+        for (int i = 0; i < 30; i++) {
+            newCustomer.search(controller, Integer.toString(i));
+        }
+        assertEquals(newCustomer.getSearchHistory().size(), 20);
+        assertEquals(newCustomer.getSearchHistory().get(0), "29");
+
+        newCustomer.clearSearchHistory();
+        assertEquals(newCustomer.getSearchHistory().size(), 0);
     }
 }
