@@ -11,6 +11,7 @@ import main.review.Review;
 
 public class Deliver extends Person {
     private int licenseNumber;
+    private List<Order> onDeliveryOrders;
     private List<Order> orders;
     private List<Review> reviews;
 
@@ -18,6 +19,7 @@ public class Deliver extends Person {
                     String phoneNumber, String emailAddress, String gender, int licenseNumber) {
         super(id, displayName, givenName, surname, phoneNumber, emailAddress, gender);
         this.licenseNumber = licenseNumber;
+        this.onDeliveryOrders = new ArrayList<>();
         this.orders = new ArrayList<>();
         this.reviews = new ArrayList<>();
     }
@@ -32,6 +34,7 @@ public class Deliver extends Person {
 
     public Deliver acceptOrder(CompletedOrder order) {
         orders.add(order);
+        onDeliveryOrders.add(order);
         return this;
     }
 
@@ -39,12 +42,12 @@ public class Deliver extends Person {
         return null;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public List<Order> getonDeliveryOrders() {
+        return onDeliveryOrders;
     }
 
     public void finishDelivery(CompletedOrder order) {
-        orders.remove(order);
+        onDeliveryOrders.remove(order);
         order.finishDelivery();
     }
 
@@ -58,5 +61,9 @@ public class Deliver extends Person {
 
     public List<Review> getReviews() {
         return reviews;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 }

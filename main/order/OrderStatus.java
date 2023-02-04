@@ -1,7 +1,7 @@
 package main.order;
 
 public enum OrderStatus {
-    PICKED_UP,
+    PICKING_UP,
     OUT_FOR_DELIVERY,
     DELIVERED,
     CANCELLED

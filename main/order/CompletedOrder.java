@@ -36,7 +36,7 @@ public class CompletedOrder extends Order {
 
     public void assignDeliver(Deliver deliver) {
         this.deliver = deliver;
-        orderStatus = OrderStatus.OUT_FOR_DELIVERY;
+        orderStatus = OrderStatus.PICKING_UP;
     }
 
     public LocalDateTime getCheckoutTime() {
@@ -45,6 +45,10 @@ public class CompletedOrder extends Order {
 
     public String getPaymentMethod() {
         return paymentMethod;
+    }
+
+    public void pickupFood() {
+        orderStatus = OrderStatus.OUT_FOR_DELIVERY;
     }
 
     public void finishDelivery() {
