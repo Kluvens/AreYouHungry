@@ -69,8 +69,20 @@ Then the controller searches delivers to deliver the order.
 The deliver can accept the offer or reject.
 If the order is rejected the controller will assign another deliver.
 
+## Voucher
+Voucher is an abstract class.
+
+### GeneralVoucher
+General vouchers apply to all restaurants with certain discount percentage.
+
+### RestaurantVoucher
+Restaurant vouchers apply to specific restaurant.
+
+## Reviews
+Customers can write reviews to delivers or restaurants, each of which maintains a list of reviews.
+
 ## TODO
-- add vouchers
 - write more tests
-- modify review and rating system
 - customers can subscribe resturants and receive notifications (observer pattern)
+- register and sign up for customers
+- enhance filter and search system by city
