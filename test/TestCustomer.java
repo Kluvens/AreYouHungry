@@ -46,26 +46,6 @@ public class TestCustomer {
     }
 
     @Test
-    @DisplayName("Test rating restaurants")
-    public void TestRatingRestaurants() {
-        Controller controller = new Controller();
-        RestaurantAddress address = new RestaurantAddress(1, "NSW", "Sydney", "2036", "Hillsdale", "D st.");
-        Restaurant newRestaurant = controller.generateRestaurant(1, "pizza hut", "a place for good pizza", "0405522521", "pizzahut@outlook.com", "123456", address, 0, LocalDateTime.now());
-        Customer newCustomer = controller.generateCustomer(1, "Justin", "Justin", "Yang", "0405522522", "young.jiapeng@gmail.com", "Male");
-        newCustomer.rateRestaurant(newRestaurant, 5);
-        assertEquals(newRestaurant.getRating(), 5);
-        Customer newCustomerSec = controller.generateCustomer(2, "Justin", "Justin", "Yang", "0405522522", "young.jiapeng@gmail.com", "Male");
-        newCustomerSec.rateRestaurant(newRestaurant, 6);
-        assertEquals(newRestaurant.getRating(), 5.5);
-    }
-
-    @Test
-    @DisplayName("Test rating delivers")
-    public void TestRatingDelivers() {
-
-    }
-
-    @Test
     @DisplayName("Test putting dishes to shopping carts")
     public void TestShoppingCarts() {
         Controller controller = new Controller();

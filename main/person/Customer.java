@@ -10,6 +10,11 @@ import java.util.List;
 
 import main.address.PersonAddress;
 import main.restaurant.*;
+import main.review.DeliverReview;
+import main.review.RestaurantReview;
+import main.review.Review;
+import main.voucher.GeneralVoucher;
+import main.voucher.RestaurantVoucher;
 import main.voucher.Voucher;
 import main.dish.*;
 import main.order.*;
@@ -23,6 +28,7 @@ public class Customer extends Person {
     private List<CompletedOrder> orders;
     private List<String> searchHistory;
     private List<Voucher> vouchers;
+    private List<Review> reviews;
 
     public Customer(int id, String displayName, String givenName, String surname,
                     String phoneNumber, String emailAddress, String gender) {
@@ -32,6 +38,7 @@ public class Customer extends Person {
         this.shoppingCarts = new HashMap<Restaurant, List<Dish>>();
         this.orders = new ArrayList<>();
         this.searchHistory = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 
     public PersonAddress generateAddress(int id, String stateName, String cityName, 
@@ -71,12 +78,28 @@ public class Customer extends Person {
         this.addresses.remove(address);
     }
 
-    public void rateRestaurant(Restaurant restaurant, int rating) {
-        restaurant.updateRating(rating);
+    public void writeReviewRestaurant(Restaurant restaurant, int rating) {
+        RestaurantReview rView = new RestaurantReview(restaurant, rating);
+        reviews.add(rView);
+        restaurant.addReview(rView);
     }
 
-    public void rateDeliver(Deliver deliver, int rating) {
-        deliver.updateRating(rating);
+    public void writeReviewRestaurant(Restaurant restaurant, int rating, String comments) {
+        RestaurantReview rView = new RestaurantReview(restaurant, rating, comments);
+        reviews.add(rView);
+        restaurant.addReview(rView);
+    }
+
+    public void writeReviewDeliver(Deliver deliver, int rating) {
+        DeliverReview dView = new DeliverReview(deliver, rating);
+        reviews.add(dView);
+        deliver.addReview(dView);
+    }
+
+    public void writeReviewDeliver(Deliver deliver, int rating, String comments) {
+        DeliverReview dView = new DeliverReview(deliver, rating, comments);
+        reviews.add(dView);
+        deliver.addReview(dView);
     }
 
     public Map<Restaurant, List<Dish>> getShoppingCarts() {
@@ -127,8 +150,15 @@ public class Customer extends Person {
         this.pendingOrders.remove(pendingOrder);
     }
 
-    public CompletedOrder completeOrder(PendingOrder pendingOrder) {
+    public CompletedOrder completedOrder(PendingOrder pendingOrder) {
         CompletedOrder order = new CompletedOrder(pendingOrder, LocalDateTime.now(), "WeChat");
+        this.pendingOrders.remove(pendingOrder);
+        this.orders.add(order);
+        return order;
+    }
+    
+    public CompletedOrder completeOrder(PendingOrder pendingOrder, Voucher voucher) {
+        CompletedOrder order = new CompletedOrder(pendingOrder, LocalDateTime.now(), "WeChat", voucher);
         this.pendingOrders.remove(pendingOrder);
         this.orders.add(order);
         return order;
@@ -165,15 +195,27 @@ public class Customer extends Person {
         searchHistory.clear();
     }
 
-    // public List<Voucher> getAvailableVouchers() {
+    public List<Voucher> getAvailableVouchers() {
+        return vouchers.stream().filter(i -> LocalDateTime.now().isBefore(i.getExpireTime())).collect(Collectors.toList());
+    }
 
-    // }
+    public List<Voucher> getUnavailableVouchers() {
+        return vouchers.stream().filter(i -> i.getExpireTime().isBefore(LocalDateTime.now())).collect(Collectors.toList());
+    }
 
-    // public List<Voucher> getUnavailableVouchers() {
-
-    // }
-
-    // public List<Voucher> getValidVoucher(Restaurant restaurant) {
-        
-    // }
+    public List<Voucher> getValidVoucher(Restaurant restaurant) {
+        List<Voucher> availableVouchers = getAvailableVouchers();
+        List<Voucher> validVouchers = new ArrayList<>();
+        for (Voucher v: availableVouchers) {
+            if (v instanceof GeneralVoucher) {
+                validVouchers.add(v);
+            } else {
+                RestaurantVoucher rVoucher = (RestaurantVoucher)v;
+                if (rVoucher.getRestaurant().equals(restaurant)) {
+                    validVouchers.add(rVoucher);
+                }
+            }
+        }
+        return validVouchers;
+    }
 }

@@ -4,12 +4,14 @@ import main.address.RestaurantAddress;
 import main.dish.Dish;
 import main.interfaces.Ratable;
 import main.order.Order;
+import main.review.RestaurantReview;
+import main.review.Review;
 
 import java.util.List;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Restaurant implements Ratable {
+public class Restaurant {
     private int id;
     private String restaurantName;
     private String description;
@@ -17,9 +19,6 @@ public class Restaurant implements Ratable {
     private String emailAddress;
     private String licenseNumber;
     private RestaurantAddress address;
-    private double totalRating;
-    private int numRating;
-    private double rating;
     private int freeDeliveryStarts;
     private int sellingInMonth;
     private LocalDateTime createTime;
@@ -28,6 +27,7 @@ public class Restaurant implements Ratable {
     private List<Dish> menu;
     private List<Order> orders;
     private RestaurantCategory category;
+    private List<Review> reviews;
 
     public Restaurant(int id, String restaurantName, String description, String phoneNumber, String emailAddress,
                         String licenseNumber, RestaurantAddress restaurantAddress, int freeDeliveryStarts, LocalDateTime createTime) {
@@ -38,9 +38,6 @@ public class Restaurant implements Ratable {
         this.emailAddress = emailAddress;
         this.licenseNumber = licenseNumber;
         this.address = restaurantAddress;
-        this.totalRating = 0;
-        this.numRating = 0;
-        this.rating = 0;
         this.freeDeliveryStarts = freeDeliveryStarts;
         this.sellingInMonth = 0;
         this.createTime = createTime;
@@ -48,6 +45,7 @@ public class Restaurant implements Ratable {
         this.isOpen = true;
         this.menu = new ArrayList<>();
         this.orders = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 
     public int getId() {
@@ -102,14 +100,16 @@ public class Restaurant implements Ratable {
         this.address = address;
     }
 
-    public double getRating() {
-        return rating;
+    public double getAverageRating() {
+        return reviews.stream().mapToDouble(d -> d.getRating()).average().orElse(0.0);
     }
 
-    public void updateRating(double rating) {
-        this.totalRating += rating;
-        this.numRating += 1;
-        this.rating = this.totalRating/this.numRating;
+    public void addReview(RestaurantReview rReview) {
+        this.reviews.add(rReview);
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 
     public int getFreeDeliveryStarts() {
