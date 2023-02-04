@@ -26,6 +26,7 @@ public class Restaurant implements Ratable {
     private boolean isOpen;
     private ArrayList<Dish> menu;
     private ArrayList<Order> orders;
+    private RestaurantCategory category;
 
     public Restaurant(int id, String restaurantName, String description, String phoneNumber, String emailAddress,
                         String licenseNumber, RestaurantAddress restaurantAddress, int freeDeliveryStarts, LocalDateTime createTime) {
@@ -174,5 +175,13 @@ public class Restaurant implements Ratable {
 
     public void remove(Order order) {
         this.orders.remove(order);
+    }
+
+    public void assignCategory(RestaurantCategory category) {
+        this.category = category;
+    }
+
+    public RestaurantCategory getCategory() {
+        return category;
     }
 }

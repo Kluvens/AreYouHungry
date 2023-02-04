@@ -3,6 +3,7 @@ package main.person;
 import java.util.ArrayList;
 
 import main.interfaces.Ratable;
+import main.order.CompletedOrder;
 import main.order.Order;
 
 public class Deliver extends Person implements Ratable {
@@ -39,12 +40,12 @@ public class Deliver extends Person implements Ratable {
         this.rating = this.totalRating/this.numRating;
     }
 
-    public Deliver acceptOrder(Order order) {
+    public Deliver acceptOrder(CompletedOrder order) {
         orders.add(order);
         return this;
     }
 
-    public Deliver rejectOrder(Order order) {
+    public Deliver rejectOrder(CompletedOrder order) {
         return null;
     }
 
@@ -52,7 +53,8 @@ public class Deliver extends Person implements Ratable {
         return orders;
     }
 
-    public void finishDelivery(Order order) {
+    public void finishDelivery(CompletedOrder order) {
         orders.remove(order);
+        order.finishDelivery();
     }
 }

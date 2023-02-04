@@ -129,5 +129,6 @@ public class Customer extends Person {
 
     public void cancelOrder(CompletedOrder order) {
         this.orders.remove(order);
+        order.cancelOrder();
     }
 }

@@ -3,10 +3,17 @@ package main.controller;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.util.Random;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Arrays;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.List;
 
 import main.person.Customer;
 import main.person.Deliver;
 import main.restaurant.Restaurant;
+import main.restaurant.RestaurantCategory;
 import main.address.*;
 
 public class Controller {
@@ -58,5 +65,26 @@ public class Controller {
         int size = delivers.size();
         int intRandom = rand.nextInt(size);
         return delivers.get(intRandom);
+    }
+
+    public ArrayList<Restaurant> filter(RestaurantCategory... categories) {
+        Set<RestaurantCategory> set = new HashSet<>(Arrays.asList(categories));
+        List<Restaurant> filteredRestaurants = this.restaurants.stream()
+                    .filter(i -> set.contains(i.getCategory()))
+                    .collect(Collectors.toList());
+
+        ArrayList<Restaurant> restaurantList = new ArrayList<>(filteredRestaurants.size());
+        restaurantList.addAll(filteredRestaurants);
+        return restaurantList;
+    }
+
+    public ArrayList<Restaurant> search(String info) {
+        List<Restaurant> returnList = this.restaurants.stream()
+                    .filter(i -> i.getRestaurantName().contains(info))
+                    .collect(Collectors.toList());
+
+        ArrayList<Restaurant> restaurantList = new ArrayList<>(returnList.size());
+        restaurantList.addAll(returnList);
+        return restaurantList;
     }
 }
